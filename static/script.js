@@ -49,6 +49,13 @@ $(document).ready(function() {
             $('#send').click()
         }
     });
+    
+    $('.list-group li').click(function(e) {
+        e.preventDefault()
+
+        $(this).parent().find('li').removeClass('active');
+        $(this).addClass('active');
+    });
 
     $('#send').on("click touchstart", () => {
         let text = $("#text").val().trim();
