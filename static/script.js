@@ -40,14 +40,28 @@ $(document).ready(function() {
         console.log(visualizationMode);
     });
 
-    $('.selectMode').on('click', e => {
-        let el = $(e.target);
-        let mode = el.data('mode');
-        $('.selectMode').removeClass('btn-info').addClass('btn-secondary');
-        el.removeClass('btn-secondary').addClass('btn-info');
-        visualizationMode = mode;
-        console.log(visualizationMode);
+    $('#text').keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+            $('#send').click()
+        }
     });
 
-
+    $('#send').on('click', () => {
+        let text = $("#text").val().trim();
+        if(text) {
+            let params = {
+                'text': text,
+                'duration': 10,
+                'color': alwanColorPicker.getColor().rgb(),
+                'color_mode': "fixed",
+                'color_intensity': "variable",
+            };
+            console.dir(params);
+            $.post('/send-text', {"params": JSON.stringify(params)})
+        }
+        else {
+            console.log("Empty text, skip sending it");
+        }
+    });
 });

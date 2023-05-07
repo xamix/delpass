@@ -151,6 +151,10 @@ body {
     font-weight: bolder;
 }
 
+.form-control {
+    padding-right: 20px; 
+}
+
 #colorPicker {
     margin-right: 20px;
 }

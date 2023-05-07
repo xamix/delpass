@@ -23,7 +23,7 @@
                                     height: 100vh;
                                     width: 100vw;
                                     background-position: center;
-                                    backctground-repeat: no-repeat;
+                                    background-repeat: no-repeat;
                                     background-size: cover;">
             <div class="mask" style="background-color: rgba(0, 0, 0, 0.8);height: 100%;width: 100%">
                 <div class="container" id="roomTabContent">
@@ -32,14 +32,8 @@
                             <button type="button" class="selectMode btn btn-info w-100" data-mode="chase">Texte</button>
                             <button type="button" class="selectMode btn btn-secondary w-100" data-mode="smooth">Karaoke</button>
                             <button type="button" class="selectMode btn btn-secondary w-100" data-mode="wipe">Historique</button>
-                            <!-- <button type="button" class="selectMode btn btn-secondary w-100" data-mode="scrollin">Scroll In</button>
-                            <button type="button" class="selectMode btn btn-secondary w-100" data-mode="scrollout">Scroll Out</button> -->
                         </div>
                         <div class="row">
-                            <!-- <div class="w-100 bg-dark row">
-                                <div id="colorPicker" class="picker"></div>
-                                <label class="text-white">Change text color</label>
-                            </div> -->
                             <div class="row"></div>
                             <div class="form-check text-white w-50">
                                 <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
@@ -50,11 +44,11 @@
                             <div class="col"></div>
                             <div id="colorPicker" class="col picker"></div>
                             <div class="row"></div>
-                            <input type="text" class="form-control text-uppercase" placeholder="Enter your text" aria-label="" aria-describedby="basic-addon1">
+                            <input type="text" id="text" class="form-control" placeholder="Enter your text" aria-label="" aria-describedby="basic-addon1">
                             <div class="row"></div>
                             <div class="col"></div>
                             <div class="col"></div>
-                            <button type="button col" class="btn btn-primary w-50">Send</button>
+                            <button type="button col" class="btn btn-primary w-50" id="send">Send</button>
                             <div class="col"></div>
                         </div>
                     </div>
