@@ -15,6 +15,13 @@
         
     </head>
     <body>
+        <div class="toast align-items-center text-white bg-danger position-absolute top-0 start-50 translate-middle-x p-2" style="z-index: 11" id="toastStatus" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toastText"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-flex justify-content-between">
             <div class="p-2"><a class="navbar-brand" href="#">PELPASS FESTIVAL</a></div> 
             <div class="p-2"><span id="subtitle">LED panel by @xamix</span></div>
@@ -30,7 +37,7 @@
                         <div class="btn-group d-flex w-100" role="group" aria-label="Light Modes">
                             <button type="button" class="selectMode btn btn-info w-100" data-mode="chase">Texte</button>
                             <button type="button" class="selectMode btn btn-secondary w-100" data-mode="smooth">Karaoke</button>
-                            <button type="button" class="selectMode btn btn-secondary w-100" data-mode="wipe">Historique</button>
+                            <button type="button" class="selectMode btn btn-secondary w-100" data-mode="wipe">History</button>
                         </div>
                         <div class="row" style="justify-content: center;">
                             <div class="row"></div>

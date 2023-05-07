@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+    var toastStatus = $("#toastStatus");
+    var toastText = document.getElementById("toastText");
+
     // Cache buster added because caching was a big problem on mobile
     let cacheBuster = new Date().getTime();
 
@@ -47,7 +50,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#send').on("click tap", () => {
+    $('#send').on("click touchstart", () => {
         let text = $("#text").val().trim();
         if(text) {
             let params = {
@@ -58,10 +61,25 @@ $(document).ready(function() {
                 'color_intensity': "variable",
             };
             console.dir(params);
-            $.post('/send-text', {"params": JSON.stringify(params)})
+            $.post('/send-text', {"params": JSON.stringify(params)}, function(data) { 
+                let success = data["success"]
+                let message = data["message"]
+                if(success) {
+                    toastStatus.addClass('bg-success');
+                    toastStatus.removeClass('bg-danger');
+                    toastText.textContent="Successfully updated mode";
+                }
+                else {
+                    toastStatus.addClass('bg-danger');
+                    toastStatus.removeClass('bg-success');
+                    toastText.textContent="Fail to change mode: " + message;
+                }
+                toastStatus.toast('show');
+            });
         }
         else {
             console.log("Empty text, skip sending it");
         }
+        return false
     });
 });
