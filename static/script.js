@@ -47,7 +47,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#send').on('click', () => {
+    $('#send').on("click tap", () => {
         let text = $("#text").val().trim();
         if(text) {
             let params = {
