@@ -1,0 +1,15 @@
+[Unit]
+Description=Delpass service
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/environment
+ExecStart=/home/delpass/Delpass/run.sh
+WorkingDirectory=/home/delpass/Delpass/
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
