@@ -41,6 +41,29 @@ $(document).ready(function() {
         el.removeClass('btn-secondary').addClass('btn-info');
         visualizationMode = mode;
         console.log(visualizationMode);
+
+        $.get('/list-sound', function(data) { 
+            // Clear the existing list
+            $('#soundList .list-group li').remove();
+
+            $.each(data.data, function(index, props) {
+                $('#soundList .list-group').append(
+                        $("<li>")
+                        .attr('class', 'list-group-item')
+                        .attr('data-props', JSON.stringify(props))
+                        .text(props.name)
+                )
+                // $('#soundList .list-group').append('<li class="list-group-item" data-props="' + JSON.stringify(props) + '"><strong>' + props.name + '</strong> ' + props.lyrics + '</li>')
+            });
+
+            // Click handler
+            $('.list-group li').click(function(e) {
+                e.preventDefault()
+        
+                $(this).parent().find('li').removeClass('active');
+                $(this).addClass('active');
+            });
+        });
     });
 
     $('#text').keypress(function(event){
@@ -48,13 +71,6 @@ $(document).ready(function() {
         if(keycode == '13'){
             $('#send').click()
         }
-    });
-    
-    $('.list-group li').click(function(e) {
-        e.preventDefault()
-
-        $(this).parent().find('li').removeClass('active');
-        $(this).addClass('active');
     });
 
     $('#send').on("click touchstart", () => {

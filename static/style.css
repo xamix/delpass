@@ -59,7 +59,7 @@ body {
 
 .list-group{
     max-height: 200px;
-    overflow:scroll;
+    overflow: auto;
     -webkit-overflow-scrolling: touch;
 }
 
