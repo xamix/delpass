@@ -44,6 +44,7 @@ body {
     padding: 0px;
     margin-left: 5px;
     font-weight: bolder;
+    color: white;
 }
 
 .form-control {
@@ -58,5 +59,12 @@ body {
     max-height: 200px;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+}
+
+.label {
+    align-self: center;
+    font-weight: bolder;
+    color: white;
+    margin-right: 5px;
 }
 

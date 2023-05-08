@@ -8,6 +8,7 @@
         <script src="static/includes/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="static/includes/alwan.min.css">
         <script src="static/includes/alwan.min.js"></script>
+        <script src="static/includes/bootstrap-input-spinner.js"></script>
 
         <script src="static/script.js" type="module"></script>
         <link rel="stylesheet" href="static/style.css">
@@ -35,15 +36,15 @@
                 <div class="container" id="roomTabContent">
                     <div class="" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="btn-group d-flex w-100" role="group" aria-label="Light Modes">
-                            <button type="button" class="selectMode btn btn-info w-100" data-mode="text">Text</button>
+                            <button type="button" class="selectMode btn btn-primary w-100" data-mode="text">Text</button>
                             <button type="button" class="selectMode btn btn-secondary w-100" data-mode="music">Music</button>
                             <button type="button" class="selectMode btn btn-secondary w-100" data-mode="history">History</button>
                         </div>
                         <div class="row" style="justify-content: center;">
-                            <div class="row"></div>
 
-                            <div class="btn-group d-flex w-100" role="group" aria-label="Light Modes">
-                                <div class="form-check text-white w-50">
+                            <div class="row"></div>
+                            <div class="d-flex w-100">
+                                <div class="form-check w-50">
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
                                     <label class="form-check-label" for="flexCheckChecked">
                                         Custom color
@@ -51,6 +52,12 @@
                                 </div>
                                 <div class="col"></div>
                                 <div id="colorPicker" class="col picker"></div>
+                            </div>
+
+                            <div class="row"></div>
+                            <div class="d-flex w-100 center">
+                                <label class="label label-default">Durée</label>
+                                <input type="number"value="60" min="1" max="3600" step="1" data-decimals="0" data-suffix="secs"/>
                             </div>
 
                             <div class="row"></div>
@@ -63,7 +70,7 @@
 
                             <div class="row"></div>
                             <input type="text" id="text" class="form-control" placeholder="Enter your text" aria-label="" aria-describedby="basic-addon1">
-                            
+
                             <div class="row"></div>
                             <button type="button col" class="btn btn-primary w-50" id="send">Send</button>
                         </div>

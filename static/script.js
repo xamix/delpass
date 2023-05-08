@@ -9,6 +9,12 @@ $(document).ready(function() {
     let visualizationMode = 'chase';
     let chosenColor = '';
 
+    // Enable input spinner on all number type
+    var props = {
+        buttonsClass: "btn-primary"
+    }
+    $("input[type='number']").inputSpinner(props);
+
     Alwan.defaults.swatches = [
         'rgba(255, 0, 0, 1)',
         'rgba(255, 123, 0, 1)',
@@ -37,8 +43,8 @@ $(document).ready(function() {
     $('.selectMode').on('click', e => {
         let el = $(e.target);
         let mode = el.data('mode');
-        $('.selectMode').removeClass('btn-info').addClass('btn-secondary');
-        el.removeClass('btn-secondary').addClass('btn-info');
+        $('.selectMode').removeClass('btn-primary').addClass('btn-secondary');
+        el.removeClass('btn-secondary').addClass('btn-primary');
         visualizationMode = mode;
         console.log(visualizationMode);
 
