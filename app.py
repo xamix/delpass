@@ -47,8 +47,8 @@ def _home():
 def _list_sound():
     return build_success_response(dp.list_sound())
 
-@blueprint.route('/send-text', methods=['POST'])
-def _send_text():
+@blueprint.route('/set-mode', methods=['POST'])
+def _set_mode():
     params = json.loads(request.form['params'])
     LOG.wrn(f"send-text: {params}")
     return build_success_response({})

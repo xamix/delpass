@@ -56,7 +56,7 @@ $(document).ready(function() {
             $.each(data.data, function(index, props) {
                 let li = $("<li>")
                     .attr('class', 'list-group-item')
-                    .attr('data-props', JSON.stringify(props))
+                    .data('props', JSON.stringify(props))
                     .text(props.name)
 
                 if(index === 0) {
@@ -88,19 +88,20 @@ $(document).ready(function() {
         if(text) {
             let params = {
                 'text': text,
-                'duration': 10,
+                'duration': parseInt($('#duration').val())  || null,
                 'color': alwanColorPicker.getColor().rgb(),
-                'color_mode': "fixed",
-                'color_intensity': "variable",
+                'color_mode': $("input[name=radioBtnColor]:checked").val(),
+                'color_intensity': $("input[name=radioBtnIntensity]:checked").val(),
+                'sound': $('#soundList .list-group').find('li.active').data('props') || null
             };
             console.dir(params);
-            $.post('/send-text', {"params": JSON.stringify(params)}, function(data) { 
+            $.post('/set-mode', {"params": JSON.stringify(params)}, function(data) { 
                 let success = data["success"]
                 let message = data["message"]
                 if(success) {
                     toastStatus.addClass('bg-success');
                     toastStatus.removeClass('bg-danger');
-                    toastText.textContent="Successfully updated mode";
+                    toastText.textContent="Successfully changed mode";
                 }
                 else {
                     toastStatus.addClass('bg-danger');
