@@ -30,6 +30,16 @@ class Delpass:
     
     def set_mode(self, params):
         self.log.wrn(f"set-mode: {params}")
+
+        mode = params["mode"]
+        if mode != "text" and mode != "music" and mode != "image" and mode != "history":
+            raise ValueError(f"Unknow mode {mode}")
+        elif mode == "text" and not params["text"]:
+            raise ValueError("Text should not be empty in text mode")
+        elif mode == "music" and not params["sound"]:
+            raise ValueError("Sound must be selected in music mode")
+        elif mode == "image" and not params["image"]:
+            raise ValueError("Image must be selected in image mode")
         pass
 
         

@@ -33,11 +33,12 @@
                                     background-repeat: no-repeat;
                                     background-size: cover;">
             <div class="mask" style="background-color: rgba(0, 0, 0, 0.8);height: 100vh;width: 100vw">
-                <div class="container" id="roomTabContent">
-                    <div class="" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="container" id="mainContainer">
+                    <div class="" id="home" role="tabpanel">
                         <div class="btn-group d-flex w-100" role="group" aria-label="Light Modes">
                             <button type="button" class="btn btn-primary w-100" name="btnMode" value="text">Text</button>
                             <button type="button" class="btn btn-secondary w-100" name="btnMode" value="music">Music</button>
+                            <button type="button" class="btn btn-secondary w-100" name="btnMode" value="image">Image</button>
                             <button type="button" class="btn btn-secondary w-100" name="btnMode" value="history">History</button>
                         </div>
                         <div class="row" style="justify-content: center;">
@@ -45,7 +46,7 @@
                             <div class="row"></div>
                             <div class="d-flex w-100">
                                 <label class="label label-default">Color:</label>
-                                <div class="d-flex flex-column ms-4">
+                                <div class="d-flex flex-column ms-3">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="radioBtnColor" id="radioColorFixed" value="fixed" checked>
                                         <label class="form-check-label" for="radioColorFixed">Fixed</label>
@@ -61,7 +62,7 @@
                             <div class="row"></div>
                             <div class="d-flex w-100">
                                 <label class="label label-default">Intensity:</label>
-                                <div class="d-flex flex-column w-100">
+                                <div class="d-flex flex-column w-100 ms-1">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="radioBtnIntensity" id="radioIntensityFixed" value="fixed" checked>
                                         <label class="form-check-label" for="radioIntensityFixed">Fixed</label>
@@ -73,6 +74,25 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="radioBtnIntensity" id="radioIntensityTemporal" value="temporal">
                                         <label class="form-check-label" for="radioIntensityTemporal">Temporal</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row"></div>
+                            <div class="d-flex w-100">
+                                <label class="label label-default">Image:</label>
+                                <div class="d-flex flex-column w-100 ms-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radioBtnImage" id="radioImageNone" value="none" checked>
+                                        <label class="form-check-label" for="radioImageNone">None</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radioBtnImage" id="radioImageSpaceInvader" value="space_invvader">
+                                        <label class="form-check-label" for="radioImageSpaceInvader">Space Invader</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radioBtnImage" id="radioImageLight" value="light">
+                                        <label class="form-check-label" for="radioImageLight">Light</label>
                                     </div>
                                 </div>
                             </div>

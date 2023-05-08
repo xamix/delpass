@@ -112,6 +112,7 @@ $(document).ready(function() {
             'duration': parseInt($('#duration').val()) || null,
             'color': alwanColorPicker.getColor().rgb(),
             'color_mode': $('input[name=radioBtnColor]:checked').val(),
+            'image': $('input[name=radioBtnImage]:checked').val(),
             'color_intensity': $('input[name=radioBtnIntensity]:checked').val(),
             'sound': $('#soundList .list-group').find('li.active').data('props') || null
         };

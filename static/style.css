@@ -1,6 +1,12 @@
 body {
     font-family: 'Source Code Pro', monospace;
+    font-size: medium;
+    font-weight: normal;
 }
+
+#mainContainer {
+    max-width: 500px !important;
+ }
 
 .btn {
     font-family: 'Orbitron', sans-serif;
@@ -50,6 +56,9 @@ body {
 #colorPicker {
     align-self: center;
     margin-left: 20px;
+    width: 50px;
+    height: 50px;
+    border-color: white;
 }
 
 .list-group{
@@ -60,8 +69,10 @@ body {
 
 .label {
     align-self: center;
-    font-weight: bolder;
+    font-weight: bold;
+    font-size: large;
     color: white;
     margin-right: 5px;
+    font-family: 'Orbitron', sans-serif;
 }
 
