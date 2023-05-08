@@ -1,4 +1,5 @@
 import pathlib
+from tools import log
 
 SOUND_DIRECTORY = "data/sound"
 
@@ -9,6 +10,7 @@ class Delpass:
 
     def __new__(cls):
         if cls.instance is None:
+            cls.log = log.Log(__name__)
             cls.instance = super().__new__(cls)
         return cls.instance
     
@@ -25,5 +27,9 @@ class Delpass:
                 results.append(entry)
 
         return results
+    
+    def set_mode(self, params):
+        self.log.wrn(f"set-mode: {params}")
+        pass
 
         

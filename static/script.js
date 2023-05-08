@@ -1,14 +1,15 @@
 $(document).ready(function() {
 
-    var toastStatus = $("#toastStatus");
-    var toastText = document.getElementById("toastText");
+    var toastStatus = $('#toastStatus');
+    var toastText = document.getElementById('toastText');
 
     // Enable input spinner on all number type
     var props = {
-        buttonsClass: "btn-primary"
+        buttonsClass: 'btn-primary'
     }
-    $("input[type='number']").inputSpinner(props);
+    $('input[type="number"]').inputSpinner(props);
 
+    // Configure color picker
     Alwan.defaults.swatches = [
         'rgba(255, 0, 0, 1)',
         'rgba(255, 123, 0, 1)',
@@ -34,25 +35,33 @@ $(document).ready(function() {
         copy: false,
     });
 
+    // Function to update mode
     function updateMode(mode) {
 
         console.log(mode);
 
         // Reset all buttons
-        $("button[name=btnMode]").removeClass('btn-primary').addClass('btn-secondary');
+        $('button[name=btnMode]').removeClass('btn-primary').addClass('btn-secondary');
 
         // Set current button to active
-        $("button[name=btnMode][data-mode=" + mode + "]").removeClass('btn-secondary').addClass('btn-primary');
+        $('button[name=btnMode][value=' + mode + ']').removeClass('btn-secondary').addClass('btn-primary');
 
         // Fetch music
-        if(mode == 'music') {
+        if(mode == 'text') {
+            $('#soundContainer').css("content-visibility", "hidden")
+            $('#textContainer').css("content-visibility", "visible")
+        }
+        else if(mode == 'music') {
+            $('#soundContainer').css("content-visibility", "visible")
+            $('#textContainer').css("content-visibility", "hidden")
+
             $.get('/list-sound', function(data) { 
                 // Clear the existing list
                 $('#soundList .list-group li').remove();
 
                 // Fill with retrived list
                 $.each(data.data, function(index, props) {
-                    let li = $("<li>")
+                    let li = $('<li>')
                         .attr('class', 'list-group-item')
                         .data('props', JSON.stringify(props))
                         .text(props.name)
@@ -73,14 +82,19 @@ $(document).ready(function() {
                 });
             });
         }
+        else {
+            $('#soundContainer').css("content-visibility", "hidden")
+            $('#textContainer').css("content-visibility", "hidden")
+        }
     }
 
-    updateMode("text")
+    // Force current mode
+    updateMode('text')
 
-    $("button[name=btnMode]").on('click', e => {
+    $('button[name=btnMode]').on('click', e => {
         let el = $(e.target);
-        let mode = el.data('mode');
-        updateMode(mode)        
+        let mode = el.val();
+        updateMode($(e.target).val())        
     });
 
     $('#text').keypress(function(event){
@@ -90,37 +104,34 @@ $(document).ready(function() {
         }
     });
 
-    $('#send').on("click touchstart", () => {
-        let text = $("#text").val().trim();
-        if(text) {
-            let params = {
-                'text': text,
-                'duration': parseInt($('#duration').val()) || null,
-                'color': alwanColorPicker.getColor().rgb(),
-                'color_mode': $("input[name=radioBtnColor]:checked").val(),
-                'color_intensity': $("input[name=radioBtnIntensity]:checked").val(),
-                'sound': $('#soundList .list-group').find('li.active').data('props') || null
-            };
-            console.dir(params);
-            $.post('/set-mode', {"params": JSON.stringify(params)}, function(data) { 
-                let success = data["success"]
-                let message = data["message"]
-                if(success) {
-                    toastStatus.addClass('bg-success');
-                    toastStatus.removeClass('bg-danger');
-                    toastText.textContent="Successfully changed mode";
-                }
-                else {
-                    toastStatus.addClass('bg-danger');
-                    toastStatus.removeClass('bg-success');
-                    toastText.textContent="Fail to change mode: " + message;
-                }
-                toastStatus.toast('show');
-            });
-        }
-        else {
-            console.log("Empty text, skip sending it");
-        }
+    $('#send').on('click touchstart', () => {
+        let text = $('#text').val().trim();
+        let params = {
+            'mode': $('button[name=btnMode].btn-primary').val(),
+            'text': text,
+            'duration': parseInt($('#duration').val()) || null,
+            'color': alwanColorPicker.getColor().rgb(),
+            'color_mode': $('input[name=radioBtnColor]:checked').val(),
+            'color_intensity': $('input[name=radioBtnIntensity]:checked').val(),
+            'sound': $('#soundList .list-group').find('li.active').data('props') || null
+        };
+        console.dir(params);
+        $.post('/set-mode', {'params': JSON.stringify(params)}, function(data) { 
+            let success = data['success']
+            let message = data['message']
+            if(success) {
+                toastStatus.addClass('bg-success');
+                toastStatus.removeClass('bg-danger');
+                toastText.textContent='Successfully changed mode';
+            }
+            else {
+                toastStatus.addClass('bg-danger');
+                toastStatus.removeClass('bg-success');
+                toastText.textContent='Fail to change mode: ' + message;
+            }
+            toastStatus.toast('show');
+        });
+
         return false
     });
 });

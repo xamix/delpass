@@ -49,9 +49,12 @@ def _list_sound():
 
 @blueprint.route('/set-mode', methods=['POST'])
 def _set_mode():
-    params = json.loads(request.form['params'])
-    LOG.wrn(f"send-text: {params}")
-    return build_success_response({})
+    try:
+        params = json.loads(request.form['params'])
+        dp.set_mode(params)
+        return build_success_response({})
+    except Exception as e:
+        return build_error_response(str(e))
 
 # Reegister all routes
 app.register_blueprint(blueprint)
