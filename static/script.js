@@ -21,7 +21,7 @@ $(document).ready(function() {
     ];
     const alwanColorPicker = new Alwan('#colorPicker', 
     { 
-        color: 'rgba(0, 255, 0, 1)',
+        color: 'rgba(255, 0, 255, 1)',
         theme: 'dark',
         format: 'rgb',
         inputs: {
@@ -46,14 +46,18 @@ $(document).ready(function() {
             // Clear the existing list
             $('#soundList .list-group li').remove();
 
+            // Fill with retrived list
             $.each(data.data, function(index, props) {
-                $('#soundList .list-group').append(
-                        $("<li>")
-                        .attr('class', 'list-group-item')
-                        .attr('data-props', JSON.stringify(props))
-                        .text(props.name)
-                )
-                // $('#soundList .list-group').append('<li class="list-group-item" data-props="' + JSON.stringify(props) + '"><strong>' + props.name + '</strong> ' + props.lyrics + '</li>')
+                let li = $("<li>")
+                    .attr('class', 'list-group-item')
+                    .attr('data-props', JSON.stringify(props))
+                    .text(props.name)
+
+                if(index === 0) {
+                    li.addClass('active')
+                }
+
+                $('#soundList .list-group').append(li)
             });
 
             // Click handler

@@ -30,22 +30,19 @@ body {
     padding-top: 1em;
 }
 
-.input-group-prepend.input-space {
-    padding-right: 15px;
-}
-
 .form-check {
-    margin-left: 11px;
+    margin: 0px;
 }
 
 .form-check-input {
     width: 24px;
     height: 24px;
+    margin: 0px;
 }
 
 .form-check-label {
-    padding: 4px;
-    margin-left: 11px;
+    padding: 0px;
+    margin-left: 5px;
     font-weight: bolder;
 }
 
@@ -54,7 +51,7 @@ body {
 }
 
 #colorPicker {
-    margin-right: 20px;
+    margin: 0px;
 }
 
 .list-group{
@@ -63,12 +60,3 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
-.panel{
-    background-color: darkgray;
-    border-radius: 12px;
-}
-
-.panel-heading{
-    padding-top: 5px;
-    padding-left: 5px;
-}
