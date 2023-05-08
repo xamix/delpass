@@ -36,9 +36,9 @@
                 <div class="container" id="roomTabContent">
                     <div class="" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="btn-group d-flex w-100" role="group" aria-label="Light Modes">
-                            <button type="button" class="selectMode btn btn-primary w-100" data-mode="text">Text</button>
-                            <button type="button" class="selectMode btn btn-secondary w-100" data-mode="music">Music</button>
-                            <button type="button" class="selectMode btn btn-secondary w-100" data-mode="history">History</button>
+                            <button type="button" class="btn btn-primary w-100" name="btnMode" data-mode="text">Text</button>
+                            <button type="button" class="btn btn-secondary w-100" name="btnMode" data-mode="music">Music</button>
+                            <button type="button" class="btn btn-secondary w-100" name="btnMode" data-mode="history">History</button>
                         </div>
                         <div class="row" style="justify-content: center;">
 
@@ -84,15 +84,15 @@
                             </div>
 
                             <div class="row"></div>
-                            <div class="panel panel-primary" id="result_panel">
+
+                            <div class="panel panel-primary" id="soundContainer">
                                 <div class="panel-body" id="soundList">
                                     <ul class="list-group">
                                     </ul>
                                 </div>
                             </div>
 
-                            <div class="row"></div>
-                            <div class="d-flex w-100">
+                            <div class="d-flex w-100" id="textContainer">
                                 <label class="label label-default">Text:</label>
                                 <input type="text" id="text" class="form-control" placeholder="Enter your text" aria-label="" aria-describedby="basic-addon1">
                             </div>
