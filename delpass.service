@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 EnvironmentFile=/etc/environment
-ExecStart=/home/delpass/Delpass/run.sh
-WorkingDirectory=/home/delpass/Delpass/
+ExecStart=/home/delpass/Delpass/delpass/run.sh
+WorkingDirectory=/home/delpass/Delpass/delpass
 StandardOutput=inherit
 StandardError=inherit
 Restart=always

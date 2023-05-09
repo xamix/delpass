@@ -1,0 +1,14 @@
+[Unit]
+Description=Static IP service
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=ip addr add 192.168.67.100/24 dev eth0
+StandardOutput=inherit
+StandardError=inherit
+User=root
+
+[Install]
+WantedBy=multi-user.target
