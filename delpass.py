@@ -1,5 +1,6 @@
 import pathlib
 from tools import log
+import time
 
 SOUND_DIRECTORY = "data/sound"
 
@@ -41,5 +42,13 @@ class Delpass:
         elif mode == "image" and not params["image"]:
             raise ValueError("Image must be selected in image mode")
         pass
+
+    def _run():
+        while True:
+            time.sleep(1)
+
+            # Depending on the mode, do the desired one
+            
+            pass
 
         

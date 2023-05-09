@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+    // Cache buster added because caching was a big problem on mobile
+    let cacheBuster = new Date().getTime();
+
     var toastStatus = $('#toastStatus');
     var toastText = document.getElementById('toastText');
 
@@ -104,7 +107,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#send').on('click touchstart', () => {
+    $('#send').on('click', () => {
         let text = $('#text').val().trim();
         let params = {
             'mode': $('button[name=btnMode].btn-primary').val(),
@@ -132,7 +135,5 @@ $(document).ready(function() {
             }
             toastStatus.toast('show');
         });
-
-        return false
     });
 });

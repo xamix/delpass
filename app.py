@@ -7,7 +7,7 @@ from tools import log
 from typing import Dict, Tuple, Optional
 
 # Create a logger
-LOG = log.Log("Delpass")
+LOG = log.Log("main")
 
 # Create flask app
 app = Flask(__name__)
