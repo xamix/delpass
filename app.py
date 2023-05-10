@@ -47,6 +47,10 @@ def _home():
 def _list_sound():
     return build_success_response(dp.list_sound())
 
+@blueprint.route('/status')
+def _status():
+    return build_success_response(dp.status())
+
 @blueprint.route('/set-mode', methods=['POST'])
 def _set_mode():
     try:

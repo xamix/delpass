@@ -49,14 +49,16 @@ $(document).ready(function() {
         // Set current button to active
         $('button[name=btnMode][value=' + mode + ']').removeClass('btn-secondary').addClass('btn-primary');
 
-        // Fetch music
+        // Depending on text mode
         if(mode == 'text') {
-            $('#soundContainer').css("content-visibility", "hidden")
-            $('#textContainer').css("content-visibility", "visible")
+            $('.soundMode, .imageMode').css("display", "none").css("content-visibility", "hidden")
+            $('.textMode, .colorParams').css("display", "block").css("content-visibility", "visible")
+            $('#send').show()
         }
-        else if(mode == 'music') {
-            $('#soundContainer').css("content-visibility", "visible")
-            $('#textContainer').css("content-visibility", "hidden")
+        else if(mode == 'sound') {
+            $('.textMode, .imageMode').css("display", "none").css("content-visibility", "hidden")
+            $('.soundMode, .colorParams').css("display", "block").css("content-visibility", "visible")
+            $('#send').show()
 
             $.get('/list-sound', function(data) { 
                 // Clear the existing list
@@ -85,9 +87,18 @@ $(document).ready(function() {
                 });
             });
         }
-        else {
-            $('#soundContainer').css("content-visibility", "hidden")
-            $('#textContainer').css("content-visibility", "hidden")
+        else if(mode == 'image') {
+            $('.soundMode, .textMode').css("display", "none").css("content-visibility", "hidden")
+            $('.imageMode, .colorParams').css("display", "block").css("content-visibility", "visible")
+            $('#send').show()
+        }
+        else if(mode == 'status') {
+            $('.textMode, .soundMode, .imageMode, .colorParams').css("display", "none").css("content-visibility", "hidden")
+            $('#send').hide()
+
+            $.get('/status', function(data) { 
+                console.dir(data);
+            });
         }
     }
 

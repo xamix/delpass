@@ -42,13 +42,13 @@
                         <div class="" id="home" style="justify-content: center;">
                             <div class="btn-group d-flex w-100" role="group" aria-label="Light Modes">
                                 <button type="button" class="btn btn-primary w-100" name="btnMode" value="text">Text</button>
-                                <button type="button" class="btn btn-secondary w-100" name="btnMode" value="music">Music</button>
+                                <button type="button" class="btn btn-secondary w-100" name="btnMode" value="sound">Sound</button>
                                 <button type="button" class="btn btn-secondary w-100" name="btnMode" value="image">Image</button>
-                                <button type="button" class="btn btn-secondary w-100" name="btnMode" value="history">History</button>
+                                <button type="button" class="btn btn-secondary w-100" name="btnMode" value="status">Status</button>
                             </div>
 
-                            <div class="row"></div>
-                            <div class="d-flex w-100">
+                            <div class="row colorParams"></div>
+                            <div class="d-flex w-100 colorParams">
                                 <label class="label label-default">Color:</label>
                                 <div class="d-flex flex-column ms-3">
                                     <div class="form-check">
@@ -63,8 +63,8 @@
                                 <div id="colorPicker" class="col picker"></div>
                             </div>
 
-                            <div class="row"></div>
-                            <div class="d-flex w-100">
+                            <div class="row colorParams"></div>
+                            <div class="d-flex w-100 colorParams">
                                 <label class="label label-default">Intensity:</label>
                                 <div class="d-flex flex-column w-100 ms-1">
                                     <div class="form-check">
@@ -82,8 +82,8 @@
                                 </div>
                             </div>
 
-                            <div class="row"></div>
-                            <div class="d-flex w-100">
+                            <div class="row imageMode"></div>
+                            <div class="d-flex w-100 imageMode">
                                 <label class="label label-default">Image:</label>
                                 <div class="d-flex flex-column w-100 ms-3">
                                     <div class="form-check">
@@ -101,26 +101,28 @@
                                 </div>
                             </div>
 
-                            <div class="row"></div>
-                            <div class="d-flex w-100">
+                            <div class="row textMode imageMode"></div>
+                            <div class="d-flex w-100 textMode imageMode">
                                 <label class="label label-default">Duration:</label>
                                 <input type="number" id="duration" value="60" min="1" max="3600" step="1" data-decimals="0" data-suffix="secs" placeholder="Enter duration"/>
                             </div>
 
-                            <div class="rowSpace"></div>
-                            <div class="panel panel-primary" id="soundContainer">
+                            <div class="row soundMode"></div>
+                            <div class="panel panel-primary soundMode">
                                 <div class="panel-body" id="soundList">
                                     <ul class="list-group">
                                     </ul>
                                 </div>
                             </div>
-                            <div class="d-flex w-100" id="textContainer">
+
+                            <div class="row textMode"></div>
+                            <div class="d-flex w-100 textMode">
                                 <label class="label label-default">Text:</label>
                                 <input type="text" id="text" class="form-control" placeholder="Enter your text" aria-label="" aria-describedby="basic-addon1">
                             </div>
                             
-                            <div class="rowSpace"></div>
-                            <button type="button" class="btn btn-primary w-50" id="send" style="text-align: center;">Send</button>
+                            <div class="rowSpace colorParams"></div>
+                            <button type="button" class="btn btn-success w-50" id="send" style="text-align: center;">Send</button>
                         </div>
                     </div>
                 </div>
