@@ -22,6 +22,7 @@ blueprint = Blueprint('views', __name__, static_folder="static")
 
 # Create Delpass
 dp = Delpass()
+dp.start()
 
 def build_error_response(message=None) -> Dict[str, any]:
     return {"success": False, "message": message, "data": {}}
