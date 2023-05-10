@@ -1,8 +1,10 @@
 import pathlib
 from tools import log
 import time
+import threading
 
-SOUND_DIRECTORY = "data/sound"
+SOUNDS_DIRECTORY = "data/sounds"
+IMAGES_DIRECTORY = "data/images"
 
 class Delpass:
 
@@ -15,6 +17,7 @@ class Delpass:
             cls.instance = super().__new__(cls)
             cls.mode = "text"
             cls.history = []
+            cls.lock = threading.Lock()
         return cls.instance
     
     def list_sound(self):
@@ -32,11 +35,12 @@ class Delpass:
         return results
     
     def status(self):
-        return {
-            "mode": self.mode,
-            "history": self.history
-        }
-    
+        with self.lock:
+            return {
+                "mode": self.mode,
+                "history": self.history
+            }
+        
     def set_mode(self, params):
         self.log.wrn(f"set-mode: {params}")
 
@@ -49,7 +53,12 @@ class Delpass:
             raise ValueError("Sound must be selected in sound mode")
         elif mode == "image" and not params["image"]:
             raise ValueError("Image must be selected in image mode")
-        pass
+        
+
+        # Lock access
+        with self.lock:
+            self.mode = mode
+            self.history.append(params)
 
     def _run():
         while True:
