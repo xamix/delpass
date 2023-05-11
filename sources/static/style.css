@@ -4,6 +4,11 @@ body {
     font-weight: normal;
 }
 
+.toast-body {
+    text-align: center;
+    justify-content: center;
+}
+
 .row {
     border: solid 1px rgb(178, 175, 175);
     height: 1px;
