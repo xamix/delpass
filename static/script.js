@@ -49,16 +49,15 @@ $(document).ready(function() {
         // Set current button to active
         $('button[name=btnMode][value=' + mode + ']').removeClass('btn-secondary').addClass('btn-primary');
 
-        // Depending on text mode
+        // Hide all
+        $('.textMode, .soundMode, .imageMode, .statusMode, .colorParams').css("display", "none").css("content-visibility", "hidden")
+
+        // Depending on mode
         if(mode == 'text') {
-            $('.soundMode, .imageMode').css("display", "none").css("content-visibility", "hidden")
             $('.textMode, .colorParams').css("display", "block").css("content-visibility", "visible")
-            $('#send').show()
         }
         else if(mode == 'sound') {
-            $('.textMode, .imageMode').css("display", "none").css("content-visibility", "hidden")
             $('.soundMode, .colorParams').css("display", "block").css("content-visibility", "visible")
-            $('#send').show()
 
             $.get('/list-sound', function(data) { 
                 // Clear the existing list
@@ -88,22 +87,66 @@ $(document).ready(function() {
             });
         }
         else if(mode == 'image') {
-            $('.soundMode, .textMode').css("display", "none").css("content-visibility", "hidden")
             $('.imageMode, .colorParams').css("display", "block").css("content-visibility", "visible")
-            $('#send').show()
         }
         else if(mode == 'status') {
-            $('.textMode, .soundMode, .imageMode, .colorParams').css("display", "none").css("content-visibility", "hidden")
-            $('#send').hide()
+            $('.statusMode').css("display", "block").css("content-visibility", "visible")
 
             $.get('/status', function(data) { 
-                console.dir(data);
+
+                // Display mode
+                $('#statusModeLabel').text("Mode: " + data.data.mode)
+
+                // Clear the existing list
+                $('#historyList .list-group li').remove();
+
+                if(data.data.history.length > 0) {
+                    // Fill with retrived list
+                    $.each(data.data.history.reverse(), function(index, props) {
+
+                        let text = props.mode
+                        if(props.mode == "text") {
+                            text += ": " + props.text
+                        }
+                        else if(props.mode == "sound") {
+                            let sound = JSON.parse(props.sound)
+                            text += ": " + sound.name
+                        }
+                        else if(props.mode == "image") {
+                            text += ": " + props.image
+                        }
+
+                        let li = $('<li>')
+                            .attr('class', 'list-group-item')
+                            .text(text)
+
+                        $('#historyList .list-group').append(li)
+                    });
+                }
+                else {
+                    let li = $('<li>')
+                            .attr('class', 'list-group-item')
+                            .data('props', JSON.stringify(props))
+                            .text("NO HISTORY")
+
+                        $('#historyList .list-group').append(li)
+                }
             });
         }
     }
 
     // Force current mode
     updateMode('text')
+
+    $('input[name=radioBtnColor]').on('change', e => {
+        let el = $(e.target);
+        let mode = el.val();
+        if(mode == 'spectrum') {
+           $('#colorPicker').hide()
+        } else {
+            $('#colorPicker').show()
+        }
+    });
 
     $('button[name=btnMode]').on('click', e => {
         let el = $(e.target);
