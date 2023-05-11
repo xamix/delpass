@@ -4,7 +4,9 @@ import time
 import threading
 import math
 import copy
+import json
 from leds import ColorMode, ColorIntensity, Leds
+from sound import Sound
 from PIL import Image
 
 SOUNDS_DIRECTORY = "data/sounds"
@@ -31,6 +33,7 @@ class Delpass(threading.Thread):
             cls.lock = threading.Lock()
             cls.mode_end_time = None
             cls.leds = Leds()
+            cls.sound = Sound()
 
             # Create image for Space invader
             cls.imageSpaceInvaderUp   = Image.open("data/images/SpaceInvaderUP.png",   mode='r', formats=None)
@@ -95,12 +98,13 @@ class Delpass(threading.Thread):
 
             self.new_params = True
             
-        # Stop any currently running animation
+        # Stop any currently running animation and sound
         self.leds.running_set(False)
+        self.sound.running_set(False)
 
     def run(self):
 
-        
+        # At boot, get defaut params
         mode = copy.deepcopy(self.mode)
         params = copy.deepcopy(self.params)
 
@@ -142,21 +146,28 @@ class Delpass(threading.Thread):
                 self._display_default_sequence()
             
     def _display_text(self, params):
-        self.leds.display_text(params["text"])
+
+        duration = params["duration"]
+
+        self.leds.display_text(params["text"], duration=duration)
 
     def _play_sound(self, params):
-        pass
+        sound = json.loads(params["sound"])
+        self.sound.play_sound(sound["path"],
+            lambda text: self.leds.display_text(text, scroll=False))
 
     def _display_image(self, params):
+
+        duration = params["duration"]
+
         if params["image"] == "space_invader":
-            self.leds.display_image(self.imageSpaceInvaderUp, self.imageSpaceInvaderDown, space=10)
+            self.leds.display_image(self.imageSpaceInvaderUp, self.imageSpaceInvaderDown, space=10, duration=duration)
         elif params["image"] == "light":
-            self.leds.display_image(self.imageLight, space=5)
+            self.leds.display_image(self.imageLight, space=5, duration=duration)
         elif params["image"] == "saucer":
-            self.leds.display_image(self.imageSaucer, space=5)
+            self.leds.display_image(self.imageSaucer, space=5, duration=duration)
         else:
-            self.leds.display_image(self.imageFullWhite)
-        pass
+            self.leds.display_image(self.imageFullWhite, duration=duration)
 
     def _display_default_sequence(self):
 

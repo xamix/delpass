@@ -202,7 +202,7 @@ class Leds():
             if img1.size[0] < TEXT_AREA_WIDTH:
                 offset_x -= (TEXT_AREA_WIDTH - img1.size[0]) / 2
 
-        while self.running_get():
+        while self.running:
 
             # Change image
             if img2 is not None and loop % 6 == 0:
@@ -263,13 +263,10 @@ class Leds():
 
         self.running_set(False)
 
-    def display_text(self, text, repeat_count=1, end_wait=0, scroll=True):
+    def display_text(self, text, repeat_count=1, duration=0, end_wait=0, scroll=True):
 
         imgText = self._get_text_as_image(text)
-        self.display_image(imgText, repeat_count=repeat_count, end_wait=end_wait, scroll=scroll)
+        self.display_image(imgText, repeat_count=repeat_count, duration=duration, end_wait=end_wait, scroll=scroll)
 
     def running_set(self, state):
         self.running = state
-
-    def running_get(self):
-        return self.running
