@@ -3,6 +3,7 @@ from tools import log
 import time
 import threading
 import math
+import copy
 from leds import ColorMode, ColorIntensity, Leds
 from PIL import Image
 
@@ -24,6 +25,8 @@ class Delpass(threading.Thread):
             cls.log = log.Log(__name__)
             cls.instance = super().__new__(cls)
             cls.mode = MODE_DEMO
+            cls.params = None
+            cls.new_params = False
             cls.history = []
             cls.lock = threading.Lock()
             cls.mode_end_time = None
@@ -38,6 +41,9 @@ class Delpass(threading.Thread):
 
             # Create image for Saucer
             cls.imageSaucer = Image.open("data/images/Saucer.png",   mode='r', formats=None)
+
+            # Create full white image
+            cls.imageFullWhite = Image.new('L', (150, 7), 255)
 
         return cls.instance
     
@@ -72,39 +78,87 @@ class Delpass(threading.Thread):
         self.log.wrn(f"set-mode: {params}")
 
         mode = params["mode"]
-        if mode != "text" and mode != "sound" and mode != "image" and mode != "status":
+        if mode != MODE_TEXT and mode != MODE_SOUND and mode != MODE_IMAGE:
             raise ValueError(f"Unknow mode {mode}")
-        elif mode == "text" and not params["text"]:
+        elif mode == MODE_TEXT and not params["text"]:
             raise ValueError("Text should not be empty in text mode")
-        elif mode == "sound" and not params["sound"]:
+        elif mode == MODE_SOUND and not params["sound"]:
             raise ValueError("Sound must be selected in sound mode")
-        elif mode == "image" and not params["image"]:
+        elif mode == MODE_IMAGE and not params["image"]:
             raise ValueError("Image must be selected in image mode")
-        
 
         # Lock access
         with self.lock:
             self.mode = mode
             self.params = params
             self.history.append(params)
+
+            self.new_params = True
             
-            # Stop any currently running animation
-            self.leds.running_set(False)
-            self.new_mode = mode
+        # Stop any currently running animation
+        self.leds.running_set(False)
 
     def run(self):
-        while True:
-            # Depending on the mode, do the desired one
 
-            if self.mode == MODE_TEXT:
-                self._display_text(self.params)
+        
+        mode = copy.deepcopy(self.mode)
+        params = copy.deepcopy(self.params)
+
+        while True:
+            # Copy the desired mode
+            with self.lock: 
+
+                # Copy new params in case needed               
+                if self.new_params:
+
+                    self.new_params = False
+
+                    mode = copy.deepcopy(self.mode)
+                    params = copy.deepcopy(self.params)
+
+                    colorMode = ColorMode.SPECTRUM if params["color_mode"] == 'spectrum' else ColorMode.FIXED
+                    if params["color_intensity"] == 'spacial':
+                        colorIntensity = ColorIntensity.SPACIAL
+                    elif params["color_intensity"] == 'temporal':
+                        colorIntensity = ColorIntensity.SPACIAL
+                    else:
+                        colorIntensity = ColorMode.FIXED
+
+                    g = int(params["color"]["g"])
+                    r = int(params["color"]["r"])
+                    b = int(params["color"]["b"])
+                    color = (g << 16) + (r << 8) + b
+
+                    self.leds.set_color_params(colorMode, colorIntensity, color)
+
+            if mode == MODE_TEXT:
+                self._display_text(params)
+            elif mode == MODE_SOUND:
+                self._play_sound(params)
+            elif mode == MODE_IMAGE:
+                self._display_image(params)
             else:
-                self._run_default_sequence()
+                self.mode = "demo"
+                self._display_default_sequence()
             
     def _display_text(self, params):
         self.leds.display_text(params["text"])
 
-    def _run_default_sequence(self):
+    def _play_sound(self, params):
+        pass
+
+    def _display_image(self, params):
+        if params["image"] == "space_invader":
+            self.leds.display_image(self.imageSpaceInvaderUp, self.imageSpaceInvaderDown, space=10)
+        elif params["image"] == "light":
+            self.leds.display_image(self.imageLight, space=5)
+        elif params["image"] == "saucer":
+            self.leds.display_image(self.imageSaucer, space=5)
+        else:
+            self.leds.display_image(self.imageFullWhite)
+        pass
+
+    def _display_default_sequence(self):
 
         if self.mode == MODE_DEMO:
             self.leds.set_color_params(ColorMode.SPECTRUM, ColorIntensity.SPACIAL)
