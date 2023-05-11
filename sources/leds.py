@@ -189,10 +189,10 @@ class Leds():
         self.color_intensity = color_intensity
 
       
-    def display_image(self, img1, img2=None, space=None, repeat_count=1, end_wait=0, scroll=True):
+    def display_image(self, img1, img2=None, space=None, repeat_count=1, duration=0, end_wait=0, scroll=True):
         self.running_set(True)
         offset_x = 0
-        end_time = None
+        end_time = None if duration <= 0 else time.monotonic() + duration
         last_render_time_s = time.monotonic()
         loop = 0
         img = img1 if img2 is None else img2

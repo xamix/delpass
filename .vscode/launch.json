@@ -8,7 +8,8 @@
             "name": "Delpass",
             "type": "python",
             "request": "launch",
-            "program": "app.py",
+            "program": "${workspaceFolder}/sources/app.py",
+            "cwd": "${workspaceFolder}/sources",
             "console": "integratedTerminal",
             "justMyCode": true
         }
