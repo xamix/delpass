@@ -1,3 +1,4 @@
 #!/bin/bash
 
-python3 sources/app.py
+cd /home/delpass/Delpass/delpass/sources &&
+python3 app.py

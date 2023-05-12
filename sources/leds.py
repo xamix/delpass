@@ -62,7 +62,7 @@ class Leds():
             cls.instance = super().__new__(cls)
             cls._init(cls)
         return cls.instance
-    
+
     def _init(self):
 
         self.running = False
@@ -71,9 +71,9 @@ class Leds():
         # Note that this structure will be created on the heap so you need to be careful
         # that you delete its memory by calling delete_ws2811_t when it's not needed anymore.
         self.leds = ws.new_ws2811_t()
-        
+
         # Destroy created leds
-        atexit.register(self._cleanup)
+        atexit.register(lambda: self._deinit(self))
 
         # Initialize all channels to off
         for channum in range(2):
@@ -111,14 +111,12 @@ class Leds():
         # Current color intensity
         self.color_intensity = ColorIntensity.FIXED
 
-
-    def _cleanup(self):
+    def _deinit(self):
         # Ensure ws2811_fini is called before the program quits.
         ws.ws2811_fini(self.leds)
         # Example of calling delete function to clean up structure memory.  Isn't
         # strictly necessary at the end of the program execution here, but is good practice.
         ws.delete_ws2811_t(self.leds)
-
 
     # Generate an image from text
     def _get_text_as_image(self, text):
