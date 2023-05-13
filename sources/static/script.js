@@ -106,19 +106,24 @@ $(document).ready(function() {
 
                         let text = props.mode
                         if(props.mode == "text") {
-                            text += ": " + props.text
+                            text = props.text
                         }
                         else if(props.mode == "sound") {
                             let sound = JSON.parse(props.sound)
-                            text += ": " + sound.name
+                            text = sound.name
                         }
                         else if(props.mode == "image") {
-                            text += ": " + props.image
+                            text = props.image
                         }
 
                         let li = $('<li>')
-                            .attr('class', 'list-group-item')
-                            .text(text)
+                            .addClass('list-group-item')
+                            .addClass('justify-content-start')
+                            .append("<strong>" + props.mode.charAt(0).toUpperCase() + props.mode.slice(1) + "</strong><br>" + text)
+
+                        if(props.mode == "text" || props.mode == "image") {
+                            li.append("<small> (" + props.duration + "sec)</small>")
+                        }
 
                         $('#historyList .list-group').append(li)
                     });
