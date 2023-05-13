@@ -261,7 +261,7 @@ class Leds():
                 if repeat_count > 1:
                     repeat_count -= 1
                     offset_x = 0
-                elif end_wait != 0:
+                elif end_wait != 0 or duration != 0:
                     if end_time is None:
                         end_time = time.monotonic() + end_wait
 
