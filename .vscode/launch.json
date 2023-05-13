@@ -7,7 +7,7 @@
         {
             "name": "Delpass",
             "type": "python",
-            "sudo": true,
+            // "sudo": true,
             "request": "launch",
             "program": "${workspaceFolder}/sources/app.py",
             "cwd": "${workspaceFolder}/sources",

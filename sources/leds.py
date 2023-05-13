@@ -139,26 +139,33 @@ class Leds():
         return rgbi
     
     def _change_luminosity(self, c, factor):
-        G = (c >> 16) & 0xFF
-        R = (c >> 8) & 0xFF
-        B = (c >> 0) & 0xFF
+        G = ((c >> 16) & 0xFF)
+        R = ((c >> 8) & 0xFF)
+        B = ((c >> 0) & 0xFF)
 
-        Y = 0.299*R + 0.587*G + 0.114*B
-        U = 0.492*(B-Y)
-        V = 0.877*(R-Y)
+        G *= factor
+        R *= factor
+        B *= factor
 
-        Y = 255 * factor
-        if Y > 255:
-            Y = 255
-        elif Y < 0:
-            Y = 0
+        if R > 255:
+            R = 255
+        elif R < 0:
+            R = 0
 
-        R = Y + 1.13983*V
-        G = Y - 0.39465*U - 0.8060*V
-        B = Y + 2.03211*U
+        if G > 255:
+            G = 255
+        elif G < 0:
+            G = 0
 
-        return (int(G) << 16) + (int(R) << 8) + int(B)
+        if B > 255:
+            B = 255
+        elif B < 0:
+            B = 0
 
+        color = (int(G) << 16) + (int(R) << 8) + int(B)
+
+        return color
+    
     def _get_color_brightness_temporal(self, c, loop):
         speed = 5
         l = (loop * speed) % 255 # From 0 to 255)
@@ -262,6 +269,8 @@ class Leds():
                     repeat_count -= 1
                     offset_x = 0
                 elif end_wait != 0 or duration != 0:
+                    if duration != 0 and time.monotonic() + 5 < end_time:
+                        repeat_count = 2
                     if end_time is None:
                         end_time = time.monotonic() + end_wait
 
