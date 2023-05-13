@@ -126,7 +126,7 @@ class Delpass(threading.Thread):
                     elif params["color_intensity"] == 'temporal':
                         colorIntensity = ColorIntensity.SPACIAL
                     else:
-                        colorIntensity = ColorMode.FIXED
+                        colorIntensity = ColorIntensity.FIXED
 
                     g = int(params["color"]["g"])
                     r = int(params["color"]["r"])
@@ -134,6 +134,8 @@ class Delpass(threading.Thread):
                     color = (g << 16) + (r << 8) + b
 
                     self.leds.set_color_params(colorMode, colorIntensity, color)
+                
+                self.mode = mode
 
             if mode == MODE_TEXT:
                 self._display_text(params)
@@ -142,8 +144,9 @@ class Delpass(threading.Thread):
             elif mode == MODE_IMAGE:
                 self._display_image(params)
             else:
-                self.mode = "demo"
                 self._display_default_sequence()
+
+            mode = MODE_DEMO
             
     def _display_text(self, params):
 
@@ -172,12 +175,12 @@ class Delpass(threading.Thread):
     def _display_default_sequence(self):
 
         if self.mode == MODE_DEMO:
-            self.leds.set_color_params(ColorMode.SPECTRUM, ColorIntensity.SPACIAL)
+            self.leds.set_color_params(ColorMode.SPECTRUM, ColorIntensity.TEMPORAL)
             self.leds.display_text("PELPASS FESTIVAL")
         
         if self.mode == MODE_DEMO:
             self.leds.set_color_params(ColorMode.SPECTRUM, ColorIntensity.TEMPORAL, 0xFF0000)
-            self.leds.display_image(self.imageLight, space=5, repeat_count=1, end_wait=5)
+            self.leds.display_image(self.imageLight, space=5, repeat_count=1, end_wait=10)
 
         if self.mode == MODE_DEMO:
             self.leds.set_color_params(ColorMode.SPECTRUM, ColorIntensity.TEMPORAL)
@@ -185,7 +188,7 @@ class Delpass(threading.Thread):
 
         if self.mode == MODE_DEMO:
             self.leds.set_color_params(ColorMode.SPECTRUM, ColorIntensity.FIXED) 
-            self.leds.display_image(self.imageSpaceInvaderDown, self.imageSpaceInvaderUp, space=10, end_wait=5)
+            self.leds.display_image(self.imageSpaceInvaderDown, self.imageSpaceInvaderUp, space=10, end_wait=10)
 
         if self.mode == MODE_DEMO:        
             self.leds.set_color_params(ColorMode.SPECTRUM, ColorIntensity.FIXED) 

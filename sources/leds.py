@@ -137,29 +137,51 @@ class Leds():
         for c in rgb:
             rgbi.append((int(c[1] * 255) << 16) + (int(c[0] * 255) << 8) + int(c[2] * 255))
         return rgbi
-
-    def _get_color_brightness(self, c, loop):
-        speed = 5
-        l = (loop * speed) % 255 # From 0 to 255)
-        p = l / 255
-
-        if p > 0.5:
-            p = (1 - p) * 2
-        else:
-            p = p * 2
-
-        if p < 0.02:
-            p = 0.02
-
+    
+    def _change_luminosity(self, c, factor):
         G = (c >> 16) & 0xFF
         R = (c >> 8) & 0xFF
         B = (c >> 0) & 0xFF
 
-        G *= p
-        R *= p
-        B *= p
+        Y = 0.299*R + 0.587*G + 0.114*B
+        U = 0.492*(B-Y)
+        V = 0.877*(R-Y)
+
+        Y = 255 * factor
+        if Y > 255:
+            Y = 255
+        elif Y < 0:
+            Y = 0
+
+        R = Y + 1.13983*V
+        G = Y - 0.39465*U - 0.8060*V
+        B = Y + 2.03211*U
 
         return (int(G) << 16) + (int(R) << 8) + int(B)
+
+    def _get_color_brightness_temporal(self, c, loop):
+        speed = 5
+        l = (loop * speed) % 255 # From 0 to 255)
+        factor = l / 255
+
+        if factor > 0.5:
+            factor = (1 - factor) * 2
+        else:
+            factor = factor * 2
+
+        if factor < 0.02:
+            factor = 0.02
+
+        return self._change_luminosity(c, factor)
+    
+    def _get_color_brightness_spacial(self, c, x):
+        # From 0 to Pi
+        factor = x * math.pi / DISPLAY_WIDTH
+
+        if factor < 0.02:
+            factor = 0.02
+        
+        return self._change_luminosity(c, factor)
 
     def _get_color(self, x, loop):
         if self.color_mode == ColorMode.SPECTRUM:
@@ -167,10 +189,12 @@ class Leds():
         else:
             c = self.FIXED_COLOR
 
-        if self.color_intensity == ColorIntensity.FIXED:
-            return c
+        if self.color_intensity == ColorIntensity.TEMPORAL:
+            return self._get_color_brightness_temporal(c, loop)
+        if self.color_intensity == ColorIntensity.SPACIAL:
+            return self._get_color_brightness_spacial(c, x)
         else:
-            return self._get_color_brightness(c, loop)
+            return c
 
 
     def _get_strip_pixel_index(self, x, y):
