@@ -8,15 +8,15 @@ body {
     height: 90px;
 
     justify-content: center !important;
+}
 
-    .title {
-        display: flex;
-        width: 100%;
-        max-width: 500px;
+.navbar-title {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
 
-        flex-direction: column;
-        padding: 0 0.5rem !important;
-    }
+    flex-direction: column;
+    padding: 0 0.5rem !important;
 }
 
 .bg-image {
@@ -128,15 +128,15 @@ body {
 .form-field {
     margin-top: 1rem;
     margin-bottom: 1rem;
+}
 
-  .inline-label {
+.form-field-inline-label {
     width: 90px;
     min-width: 90px;
 
     margin-right: 15px;
 
     text-align: left;
-  }
 }
 
 .tabs-container {

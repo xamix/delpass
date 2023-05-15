@@ -26,7 +26,7 @@
             </div>
 
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-flex justify-content-between">
-                <div class="title w-100">
+                <div class="navbar-title w-100">
                     <a class="navbar-brand" href="#">PELPASS FESTIVAL</a>
                     <span id="subtitle">LED panel by @xamix</span>
                 </div>
@@ -44,7 +44,7 @@
 
                             <div class="row colorParams"></div>
                             <div class="form-field d-flex w-100 colorParams">
-                                <label class="label label-default inline-label">Color:</label>
+                                <label class="label label-default form-field-inline-label">Color:</label>
                                 <div class="d-flex flex-column">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="radioBtnColor" id="radioColorFixed" value="fixed" checked>
@@ -60,7 +60,7 @@
 
                             <div class="row colorParams"></div>
                             <div class="form-field d-flex w-100 colorParams">
-                                <label class="label label-default inline-label">Intensity:</label>
+                                <label class="label label-default form-field-inline-label">Intensity:</label>
                                 <div class="d-flex flex-column w-100">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="radioBtnIntensity" id="radioIntensityFixed" value="fixed" checked>
@@ -79,7 +79,7 @@
 
                             <div class="row imageMode"></div>
                             <div class="form-field d-flex w-100 imageMode">
-                                <label class="label label-default inline-label">Image:</label>
+                                <label class="label label-default form-field-inline-label">Image:</label>
                                 <div class="d-flex flex-column w-100">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="radioBtnImage" id="radioImageNone" value="none" checked>
@@ -102,7 +102,7 @@
 
                             <div class="row textMode imageMode"></div>
                             <div class="form-field d-flex w-100 textMode imageMode">
-                                <label class="label label-default inline-label">Duration:</label>
+                                <label class="label label-default form-field-inline-label">Duration:</label>
                                 <input type="number" id="duration" value="60" min="1" max="3600" step="1" data-decimals="0" data-suffix="secs" placeholder="Enter duration"/>
                             </div>
 
@@ -116,8 +116,8 @@
 
                             <div class="row textMode"></div>
                             <div class="form-field d-flex w-100 textMode">
-                                <label class="label label-default inline-label">Text:</label>
-                                <input type="text" id="text" class="form-control" placeholder="Enter your text" aria-label="" aria-describedby="basic-addon1">
+                                <label class="label label-default form-field-inline-label">Text:</label>
+                                <textarea id="text" class="form-control" placeholder="Enter your text" aria-label="" aria-describedby="basic-addon1"></textarea>
                             </div>
 
                             <div class="row statusMode"></div>
