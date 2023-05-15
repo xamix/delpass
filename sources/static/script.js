@@ -38,6 +38,14 @@ $(document).ready(function() {
         copy: false,
     });
 
+    // Function to popup error
+    function popupHttpError(message) {
+        toastStatus.addClass('bg-danger');
+        toastStatus.removeClass('bg-success');
+        toastText.textContent = 'HTTP request failed: ' + message;
+        toastStatus.toast('show');
+    }
+
     // Function to update mode
     function updateMode(mode) {
 
@@ -61,9 +69,10 @@ $(document).ready(function() {
         else if(mode == 'sound') {
             $('.soundMode, .colorParams').removeClass('is-hidden');
 
+            // Clear the existing list
+            $('#soundList .list-group li').remove();
+
             $.get('/list-sound', function(data) {
-                // Clear the existing list
-                $('#soundList .list-group li').remove();
 
                 // Fill with retrived list
                 $.each(data.data, function(index, props) {
@@ -86,7 +95,9 @@ $(document).ready(function() {
                     $(this).parent().find('li').removeClass('active');
                     $(this).addClass('active');
                 });
-            });
+            }).fail(function(xhr, textStatus, errorThrown) {
+                popupHttpError("Fail to get sound list")
+            });;
         }
         else if(mode == 'image') {
             $('.imageMode, .colorParams').removeClass('is-hidden');
@@ -94,13 +105,16 @@ $(document).ready(function() {
         else if(mode == 'status') {
             $('.statusMode').removeClass('is-hidden');
 
+            // Display mode
+            $('#statusModeLabel').text("Mode:")
+
+            // Clear the existing list
+            $('#historyList .list-group li').remove();
+
             $.get('/status', function(data) {
 
                 // Display mode
                 $('#statusModeLabel').text("Mode: " + data.data.mode)
-
-                // Clear the existing list
-                $('#historyList .list-group li').remove();
 
                 if(data.data.history.length > 0) {
                     // Fill with retrived list
@@ -138,6 +152,8 @@ $(document).ready(function() {
 
                         $('#historyList .list-group').append(li)
                 }
+            }).fail(function(xhr, textStatus, errorThrown) {
+                popupHttpError("Fail to get status")
             });
         }
     }
@@ -182,6 +198,7 @@ $(document).ready(function() {
             'sound': $('#soundList .list-group').find('li.active').data('props') || null
         };
         console.dir(params);
+
         $.post('/set-mode', {'params': JSON.stringify(params)}, function(data) {
             let success = data['success']
             let message = data['message']
@@ -196,6 +213,8 @@ $(document).ready(function() {
                 toastText.textContent='Fail to change mode: ' + message;
             }
             toastStatus.toast('show');
+        }).fail(function(xhr, textStatus, errorThrown) {
+            popupHttpError("Fail to set mode")
         });
     });
 });
