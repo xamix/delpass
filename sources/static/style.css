@@ -14,7 +14,7 @@ body {
     height: 1px;
     margin: 10px;
 }
-  
+
 .rowSpace {
     height: 1px;
     margin: 10px;
@@ -91,5 +91,10 @@ body {
     color: white;
     margin-right: 5px;
     font-family: 'Orbitron', sans-serif;
+}
+
+.is-hidden {
+    display: none !important;
+    content-visibility: hidden !important;
 }
 

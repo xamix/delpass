@@ -10,3 +10,4 @@ pylrc==0.1.2
 python-vlc==3.0.18122
 waitress==2.1.2
 Werkzeug==2.3.3
+Sound==0.1.0

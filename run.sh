@@ -1,4 +1,6 @@
 #!/bin/bash
 
-cd /home/delpass/Delpass/delpass/sources &&
+DIRECTORY="$(pwd)"
+
+cd $DIRECTORY/sources &&
 python3 app.py
