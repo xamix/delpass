@@ -119,15 +119,23 @@ class Leds():
         ws.delete_ws2811_t(self.leds)
 
     # Generate an image from text
-    def _get_text_as_image(self, text):
+    def _get_text_as_image(self, text, fill):
 
         # Measure the size of our text
         text_width, text_height = self.font.getsize(text)
+        x_offset = 0
 
-        # Create a new PIL image size of the text   
-        image = Image.new('L', (text_width, text_height), 0)
+        # Create a new PIL image size of the text  
+        if fill and text_width < TEXT_AREA_WIDTH:
+            x_offset = (TEXT_AREA_WIDTH - text_width) / 2
+            image_w = TEXT_AREA_WIDTH
+        else:
+            x_offset = 0
+            image_w = text_width
+        
+        image = Image.new('L', (image_w, text_height), 0)
         draw = ImageDraw.Draw(image)
-        draw.text((0, 0), text, font=self.font, fill=255, stroke_width=0, stroke_fill=255)
+        draw.text((x_offset, 0), text, font=self.font, fill=255, stroke_width=0, stroke_fill=255)
 
         return image
 
@@ -296,7 +304,7 @@ class Leds():
 
     def display_text(self, text, repeat_count=1, duration=0, end_wait=0, scroll=True):
 
-        imgText = self._get_text_as_image(text)
+        imgText = self._get_text_as_image(text, fill = not scroll)
         self.display_image(imgText, repeat_count=repeat_count, duration=duration, end_wait=end_wait, scroll=scroll)
 
     def running_set(self, state):
