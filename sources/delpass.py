@@ -82,7 +82,7 @@ class Delpass(threading.Thread):
 
         mode = params["mode"]
         if mode != MODE_TEXT and mode != MODE_SOUND and mode != MODE_IMAGE:
-            raise ValueError(f"Unknow mode {mode}")
+            raise ValueError(f"Unknown mode {mode}")
         elif mode == MODE_TEXT and not params["text"]:
             raise ValueError("Text should not be empty in text mode")
         elif mode == MODE_SOUND and not params["sound"]:
@@ -124,7 +124,9 @@ class Delpass(threading.Thread):
                     if params["color_intensity"] == 'spacial':
                         colorIntensity = ColorIntensity.SPACIAL
                     elif params["color_intensity"] == 'temporal':
-                        colorIntensity = ColorIntensity.SPACIAL
+                        colorIntensity = ColorIntensity.TEMPORAL
+                    elif params["color_intensity"] == 'strobo':
+                        colorIntensity = ColorIntensity.STROBO
                     else:
                         colorIntensity = ColorIntensity.FIXED
 
@@ -133,7 +135,9 @@ class Delpass(threading.Thread):
                     b = int(params["color"]["b"])
                     color = (g << 16) + (r << 8) + b
 
-                    self.leds.set_color_params(colorMode, colorIntensity, color)
+                    strobo_speed = params["strobo_speed"]
+
+                    self.leds.set_color_params(colorMode, colorIntensity, color, strobo_speed)
                 
                 self.mode = mode
 

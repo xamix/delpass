@@ -91,6 +91,11 @@ body {
     font-weight: bolder;
     color: white;
     vertical-align: sub;
+    align-self: center;
+}
+
+#stroboSpeed {
+    margin-left: 10px;
 }
 
 .form-control {

@@ -49,6 +49,7 @@ class ColorIntensity(Enum):
     FIXED = 1
     SPACIAL = 2
     TEMPORAL = 3
+    STROBO = 4
 
 # Class used to control the leds
 class Leds():
@@ -110,6 +111,8 @@ class Leds():
         self.color_mode = ColorMode.FIXED
         # Current color intensity
         self.color_intensity = ColorIntensity.FIXED
+        # Current strobo speed
+        self.strobo_speed = 1
 
     def _deinit(self):
         # Ensure ws2811_fini is called before the program quits.
@@ -197,6 +200,10 @@ class Leds():
             factor = 0.02
         
         return self._change_luminosity(c, factor)
+    
+    def _get_color_brightness_strobo(self, c, loop):
+        l = loop / self.strobo_speed # Here increase value to lower strobo speed (1 is maximum strobo speed)
+        return c if (l % 2) == 0 else 0
 
     def _get_color(self, x, loop):
         if self.color_mode == ColorMode.SPECTRUM:
@@ -208,6 +215,8 @@ class Leds():
             return self._get_color_brightness_temporal(c, loop)
         if self.color_intensity == ColorIntensity.SPACIAL:
             return self._get_color_brightness_spacial(c, x)
+        if self.color_intensity == ColorIntensity.STROBO:
+            return self._get_color_brightness_strobo(c, loop)
         else:
             return c
 
@@ -218,12 +227,13 @@ class Leds():
         else:
             return y * DISPLAY_WIDTH + (DISPLAY_WIDTH - x - 1)
 
-    def set_color_params(self, color_mode, color_intensity, color=None):
+    def set_color_params(self, color_mode, color_intensity, color=None, strobo_speed=None):
         if color:
             self.FIXED_COLOR = color
 
         self.color_mode = color_mode
         self.color_intensity = color_intensity
+        self.strobo_speed = strobo_speed
 
       
     def display_image(self, img1, img2=None, space=None, repeat_count=1, duration=0, end_wait=0, scroll=True):
@@ -304,6 +314,7 @@ class Leds():
 
     def display_text(self, text, repeat_count=1, duration=0, end_wait=0, scroll=True):
 
+        text = text.replace('\r', ' ').replace('\n', ' ')
         imgText = self._get_text_as_image(text, fill = not scroll)
         self.display_image(imgText, repeat_count=repeat_count, duration=duration, end_wait=end_wait, scroll=scroll)
 
