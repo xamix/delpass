@@ -194,7 +194,7 @@ class Leds():
     
     def _get_color_brightness_spacial(self, c, x):
         # From 0 to Pi
-        factor = x * math.pi / DISPLAY_WIDTH
+        factor = x * 5 * math.pi / DISPLAY_WIDTH
 
         if factor < 0.02:
             factor = 0.02
