@@ -23,8 +23,8 @@ $(document).ready(function() {
         'rgba(108, 16, 157, 1)',
         'rgba(0, 255, 255, 1)'
     ];
-    const alwanColorPicker = new Alwan('#colorPicker', 
-    { 
+    const alwanColorPicker = new Alwan('#colorPicker',
+    {
         color: 'rgba(255, 0, 255, 1)',
         theme: 'dark',
         format: 'rgb',
@@ -33,7 +33,7 @@ $(document).ready(function() {
             // hex: true,
             // hsl: true,
         },
-        opacity: false, 
+        opacity: false,
         preview: true,
         copy: false,
     });
@@ -50,16 +50,18 @@ $(document).ready(function() {
         $('button[name=btnMode][value=' + mode + ']').removeClass('btn-secondary').addClass('btn-primary');
 
         // Hide all
-        $('.textMode, .soundMode, .imageMode, .statusMode, .colorParams').css("display", "none").css("content-visibility", "hidden")
+        $(
+          '.textMode, .soundMode, .imageMode, .statusMode, .colorParams',
+        ).addClass('is-hidden');
 
         // Depending on mode
         if(mode == 'text') {
-            $('.textMode, .colorParams').css("display", "block").css("content-visibility", "visible")
+            $('.textMode, .colorParams').removeClass('is-hidden');
         }
         else if(mode == 'sound') {
-            $('.soundMode, .colorParams').css("display", "block").css("content-visibility", "visible")
+            $('.soundMode, .colorParams').removeClass('is-hidden');
 
-            $.get('/list-sound', function(data) { 
+            $.get('/list-sound', function(data) {
                 // Clear the existing list
                 $('#soundList .list-group li').remove();
 
@@ -80,19 +82,19 @@ $(document).ready(function() {
                 // Click handler
                 $('.list-group li').click(function(e) {
                     e.preventDefault()
-            
+
                     $(this).parent().find('li').removeClass('active');
                     $(this).addClass('active');
                 });
             });
         }
         else if(mode == 'image') {
-            $('.imageMode, .colorParams').css("display", "block").css("content-visibility", "visible")
+            $('.imageMode, .colorParams').removeClass('is-hidden');
         }
         else if(mode == 'status') {
-            $('.statusMode').css("display", "block").css("content-visibility", "visible")
+            $('.statusMode').removeClass('is-hidden');
 
-            $.get('/status', function(data) { 
+            $.get('/status', function(data) {
 
                 // Display mode
                 $('#statusModeLabel').text("Mode: " + data.data.mode)
@@ -156,7 +158,7 @@ $(document).ready(function() {
     $('button[name=btnMode]').on('click', e => {
         let el = $(e.target);
         let mode = el.val();
-        updateMode($(e.target).val())        
+        updateMode($(e.target).val())
     });
 
     $('#text').keypress(function(event){
@@ -179,7 +181,7 @@ $(document).ready(function() {
             'sound': $('#soundList .list-group').find('li.active').data('props') || null
         };
         console.dir(params);
-        $.post('/set-mode', {'params': JSON.stringify(params)}, function(data) { 
+        $.post('/set-mode', {'params': JSON.stringify(params)}, function(data) {
             let success = data['success']
             let message = data['message']
             if(success) {
