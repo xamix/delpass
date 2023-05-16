@@ -130,7 +130,7 @@ class Leds():
 
         # Create a new PIL image size of the text  
         if fill and text_width < TEXT_AREA_WIDTH:
-            x_offset = (TEXT_AREA_WIDTH - text_width) / 2
+            x_offset = (TEXT_AREA_WIDTH - text_width) // 2
             image_w = TEXT_AREA_WIDTH
         else:
             x_offset = 0
@@ -202,7 +202,7 @@ class Leds():
         return self._change_luminosity(c, factor)
     
     def _get_color_brightness_strobo(self, c, loop):
-        l = loop / self.strobo_speed # Here increase value to lower strobo speed (1 is maximum strobo speed)
+        l = loop // self.strobo_speed # Here increase value to lower strobo speed (1 is maximum strobo speed)
         return c if (l % 2) == 0 else 0
 
     def _get_color(self, x, loop):
@@ -247,7 +247,7 @@ class Leds():
         if not scroll:
             offset_x = TEXT_AREA_WIDTH
             if img1.size[0] < TEXT_AREA_WIDTH:
-                offset_x -= (TEXT_AREA_WIDTH - img1.size[0]) / 2
+                offset_x -= (TEXT_AREA_WIDTH - img1.size[0]) // 2
 
         while self.running:
 
